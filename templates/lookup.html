@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Lookup{% endblock %}
+{% block content %}
+<section class="main-content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-search"></i>
+                <h3>Hieroglyph Lookup</h3>
+            </div>
+            <form method="post">
+                <div class="form-group">
+                    <label for="code">Enter Gardiner Code</label>
+                    <input type="text" id="code" name="code" class="form-control" placeholder="e.g. D10, G17, F31"
+                        required>
+                </div>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Lookup Symbol</button>
+            </form>
+        </div>
+
+        {% if meaning %}
+        <div class="result-card">
+            <div class="result-icon">
+                <i class="fas fa-scroll"></i>
+            </div>
+            <h2 class="result-title">Symbol Identified</h2>
+            <div class="code-display">{{ code }}</div>
+            <h3 class="meaning-display">{{ meaning }}</h3>
+        </div>
+        {% elif error %}
+        <div class="result-card">
+            <div class="result-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 class="result-title">Symbol Not Found</h2>
+            <div class="error-display">
+                <p><i class="fas fa-exclamation-circle"></i> {{ error }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}

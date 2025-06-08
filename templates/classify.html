@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block title %}Classify Image{% endblock %}
+{% block content %}
+<section class="main-content">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <i class="fas fa-camera"></i>
+                <h3>Classify Hieroglyph Image</h3>
+            </div>
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="file">Upload Image</label>
+                    <input type="file" id="file" name="file" class="form-control" required>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="true_code">Known Gardiner Code (Optional)</label>
+                    <input type="text" id="true_code" name="true_code" class="form-control"
+                        placeholder="If you know the symbol code, enter it here">
+                </div> -->
+                <button type="submit" class="btn btn-primary"><i class="fas fa-upload"></i> Classify Image</button>
+            </form>
+        </div>
+
+        {% if gardiner_code %}
+        <div class="result-card">
+            <div class="result-icon">
+                <i class="fas fa-camera"></i>
+            </div>
+            <h2 class="result-title">Image Classification Result</h2>
+            {% if true_code %}
+            <div class="true-code">
+                <i class="fas fa-check-circle"></i> True Code: {{ true_code }}
+            </div>
+            {% endif %}
+            <div class="image-preview">
+                <div class="image-container">
+                    <h4>Original Image</h4>
+                    <img src="data:image/png;base64,{{ original }}" alt="Original Image" class="preview-img">
+                </div>
+                <div class="image-container">
+                    <h4>Processed Image</h4>
+                    <img src="data:image/png;base64,{{ grayscale }}" alt="Processed Image" class="preview-img">
+                </div>
+            </div>
+            <div class="prediction-badge">
+                <i class="fas fa-brain"></i> Prediction: {{ gardiner_code }}
+            </div>
+            <h3 class="meaning-display">{{ meaning }}</h3>
+        </div>
+        {% elif error %}
+        <div class="result-card">
+            <div class="result-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 class="result-title">Classification Error</h2>
+            <div class="error-display">
+                <p><i class="fas fa-exclamation-circle"></i> {{ error }}</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
